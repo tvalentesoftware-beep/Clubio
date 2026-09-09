@@ -34,6 +34,8 @@ en que se pensaron las cosas.
 | [05-caso-punto-country.md](docs/05-caso-punto-country.md) | El sistema anterior: qué aprendimos de operarlo |
 | [decisiones/](docs/decisiones/) | Los ADR: una decisión por archivo |
 | [db/migraciones/](db/migraciones/) | El esquema, como SQL ejecutable |
+| [db/semillas/](db/semillas/) | Dos clubes de demostración para levantar el sistema con datos |
+| [db/pruebas/](db/pruebas/) | Las promesas del modelo, comprobadas contra la base |
 
 ## Stack
 

@@ -17,6 +17,7 @@ obviedad.
 | [0006](0006-identidad-del-cliente.md) | Teléfono sin ser clave primaria | Es la clave del negocio, no la técnica: cambiar de número es editar un campo |
 | [0007](0007-historia-en-eventos.md) | Cancelar no borra | Estado y bitácora; los contadores por cliente se calculan, no se guardan |
 | [0008](0008-stack.md) | Next.js sobre Supabase | El stack sale de lo que las decisiones anteriores le exigen a la base |
+| [0009](0009-datos-de-prueba-ficticios.md) | Datos de prueba inventados | Dos clubes ficticios y pruebas ejecutables, en vez de un volcado de datos reales |
 
 Casi todas se apoyan en el mismo material: lo que pasó operando el sistema
 anterior, documentado en [../05-caso-punto-country.md](../05-caso-punto-country.md).
