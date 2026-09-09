@@ -1,0 +1,28 @@
+La idea es hacer un panel administrativo para clubes deportivos en general. Usar logo y colores del logo.
+Comentame que bases de datos serán necesarias. 
+Lo que vera el encargado es un panel con el logo y los colores del club y con los siguientes apartados:
+
+<<APARTADOS>>
+- Turnos: Tabla general similar a Excel, que muestre todos los turnos del club. Filtros por dia, deporte, cancha.
+ De cada turno se debe mostrar: Nombre y teléfono del cliente, Dia y hora del turno. Si es fijo, turno normal o clase.
+Si el turno esta ocupado, se podrá cancelar o editar.
+Si el turno esta libre, se puede agendar o bloquear (vacaciones, etc)
+Si se cancela el turno, se dejan todos los datos vacíos (se consulta si fue el mismo cliente el que lo cancelo, se suma una cancelada al cliente). Si se bloquea, el nombre del turno es BLOQUEADO, si se edita, solo cambia el campo que se edito.
+Si se agenda un turno, se debe completar obligatoriamente los campos de nombre completo, teléfono (completo, se usara como id de cliente), fecha, hora, deporte y cancha, si es fijo, normal o clase.
+Si es fijo, debe impactar todas las apariciones de ese dia, hora, deporte y cancha, con ese nombre y teléfono. Lo mismo con las clases, ya que al ser fijo se repite semana a semana.
+
+Tendra un subapartado de estadísticas. Se verán los ingresos generales del club a través de los turnos.
+Cuanto dejo durante el mes corriente hasta el dia corriente, cuanto dejo históricamente hasta el dia corriente, cada deporte.
+Cuanto dejo de ingresos las clases y los fijos.
+
+- Clientes: Tabla de cada cliente registrado en el club (identificados con el teléfono, pkey). En esta tabla se verán todos los clientes, ordenados por el que mas ingresos le dejo al club. Se vera: nombre de cliente, teléfono, turnos jugados, deporte que hizo, total aportado.
+
+Se podrá acceder a cada cliente de esa tabla, para ver sus datos (Nombre, teléfono, turnos jugados, total aportado, deportes que hizo en el club), además una casilla de Lista Negra, si se selecciona, se deberá completar el porque de su inclusión a la lista negra.
+
+Tendra dos subapartados: Lista negra, se verán todos los clientes contenidos en ella, junto con sus justificativos.
+Estadísticas, se vera el top de los siguientes tópicos: Los que mas turnos jugaron en general y cada deporte. Los que mas cancelaron.
+
+
+
+<<COSAS A PREGUNTAR AL CLUB>>
+- Que deportes tiene el club? Cuantas canchas de cada deporte? Que días y horarios tienen? Que precios tiene cada deporte? De cuanto son los turnos?

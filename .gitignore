@@ -1,0 +1,26 @@
+# dependencias
+node_modules/
+.pnp
+.pnp.js
+
+# build
+.next/
+out/
+dist/
+build/
+
+# entorno
+.env
+.env*.local
+!.env.example
+
+# material comercial: no va al repo publico
+comercial/
+*-precios.*
+*-presupuesto.*
+
+# sistema
+.DS_Store
+Thumbs.db
+*.log
+.vercel
