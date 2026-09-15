@@ -109,12 +109,28 @@ hace imposible vender dos veces el mismo piso.
 **`turno_eventos`** es la bitácora: qué le pasó a cada turno, cuándo y por
 obra de quién.
 
+## La función de disponibilidad
+
+`fn_disponibilidad(club, desde, hasta, cancha?)` es la única definición de
+"está libre" del sistema, y vive en
+[db/migraciones/0002_disponibilidad.sql](../db/migraciones/0002_disponibilidad.sql).
+Devuelve todos los slots de todas las canchas del club en el rango de días,
+cada uno con su estado —`libre`, `ocupado`, `cerrado` o `serie`— y con la
+referencia que lo explica: qué turno ocupa, y de qué cancha es ese turno
+cuando la ocupación viene de una cancha vecina que comparte espacio.
+
+Tres decisiones chicas que conviene conocer. El paso de la grilla es la
+duración del deporte, no una cuadrícula de media hora: pádel de 90 minutos
+abriendo a las 14:30 da 14:30, 16:00, 17:30. La precedencia es `ocupado` >
+`cerrado` > `serie` > `libre`. Y una serie que no está alineada con la grilla
+—una clase a las 18:00 sobre slots de 17:30 y 19:00— bloquea los dos slots
+que toca, porque el espacio no está en ninguno de los dos.
+
+La función corre con los permisos de quien la llama, así que RLS aplica.
+
 ## Lo que todavía no está
 
-La función de disponibilidad —franjas de apertura, menos cierres, menos
-ocupaciones, menos series vigentes no materializadas— es la pieza central del
-sistema y **no** está escrita todavía. Va a ir en su propia migración, con sus
-casos de prueba, porque es de lejos la parte con más chance de estar mal.
-
-Las vistas de estadísticas tampoco. Primero hay que ver qué consultas pide de
-verdad la pantalla; escribir vistas antes de eso es adivinar.
+`fn_materializar_serie` —generar los turnos de una serie hasta el horizonte
+sin pisar lo que ya exista— sigue pendiente. Y las vistas de estadísticas
+tampoco están: primero hay que ver qué consultas pide de verdad la pantalla;
+escribir vistas antes de eso es adivinar.
