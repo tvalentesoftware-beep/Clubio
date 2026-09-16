@@ -128,9 +128,34 @@ que toca, porque el espacio no está en ninguno de los dos.
 
 La función corre con los permisos de quien la llama, así que RLS aplica.
 
+## Materializar una serie
+
+`fn_materializar_serie(serie, desde?, hasta?, simular?)` es la otra mitad del
+[ADR 0004](decisiones/0004-fijos-como-serie.md): recorre las fechas de la
+serie en el rango y genera los turnos que faltan, sin pisar nada. Vive en
+[db/migraciones/0003_materializar_serie.sql](../db/migraciones/0003_materializar_serie.sql).
+
+Lo importante no es lo que crea sino lo que responde. Por cada fecha devuelve
+una fila con un resultado: `creado`, `ya_existia`, `conflicto` (hay un turno
+en ese espacio, y dice de quién y en qué cancha), `conflicto_serie` (otro fijo
+ya toma ese horario), `cerrado`, `fuera_de_horario` o `sin_tarifa`. Con
+`simular = true` no escribe: el panel pregunta primero, muestra los
+conflictos, y recién si el encargado confirma genera. Así es como se avisa que
+donde va el fijo ya había algo.
+
+Para saber si el horario está libre no tiene reglas propias: le pregunta a
+`fn_disponibilidad`. Y el precio lo resuelve `fn_precio_vigente`, que es la
+regla de precedencia de tarifas del ADR 0005 escrita en un solo lugar: la más
+específica gana —cancha y tipo, cancha, tipo, general— y dentro de eso, la
+más reciente vigente.
+
+Lo que queda por decidir es quién la llama y cuándo: al crear o editar la
+serie desde el panel, seguro; y periódicamente para empujar el horizonte, con
+un cron de Supabase o desde la app. Es una decisión de la etapa de la
+aplicación.
+
 ## Lo que todavía no está
 
-`fn_materializar_serie` —generar los turnos de una serie hasta el horizonte
-sin pisar lo que ya exista— sigue pendiente. Y las vistas de estadísticas
-tampoco están: primero hay que ver qué consultas pide de verdad la pantalla;
-escribir vistas antes de eso es adivinar.
+Las vistas de estadísticas: primero hay que ver qué consultas pide de verdad
+la pantalla; escribir vistas antes de eso es adivinar. Y una prueba real de
+RLS, que necesita usuarios en `auth.users`.
