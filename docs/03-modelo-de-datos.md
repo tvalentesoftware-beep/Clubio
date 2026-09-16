@@ -157,5 +157,4 @@ aplicación.
 ## Lo que todavía no está
 
 Las vistas de estadísticas: primero hay que ver qué consultas pide de verdad
-la pantalla; escribir vistas antes de eso es adivinar. Y una prueba real de
-RLS, que necesita usuarios en `auth.users`.
+la pantalla; escribir vistas antes de eso es adivinar.
