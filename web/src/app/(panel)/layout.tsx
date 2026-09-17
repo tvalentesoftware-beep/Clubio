@@ -35,9 +35,9 @@ export default async function PanelLayout({ children }: { children: React.ReactN
             <Link href="/turnos" className="rounded-md px-3 py-1.5 font-medium hover:bg-slate-100">
               Turnos
             </Link>
-            <span className="rounded-md px-3 py-1.5 text-slate-400" title="Próximamente">
+            <Link href="/clientes" className="rounded-md px-3 py-1.5 font-medium hover:bg-slate-100">
               Clientes
-            </span>
+            </Link>
           </nav>
 
           <form action={salir} className="ml-auto">

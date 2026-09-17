@@ -89,3 +89,30 @@ export type FilaMaterializacion = {
   referencia_id: string | null;
   detalle: string | null;
 };
+
+// Una fila de vw_clientes_resumen.
+export type ClienteResumen = {
+  id: string;
+  nombre: string;
+  telefono: string;
+  notas: string | null;
+  en_lista_negra: boolean;
+  motivo_lista_negra: string | null;
+  lista_negra_desde: string | null;
+  creado_en: string;
+  turnos_jugados: number;
+  total_aportado: number;
+  cancelados: number;
+  turnos_futuros: number;
+  ultimo_turno: string | null;
+  deportes: string[];
+};
+
+// Una fila de vw_clientes_por_deporte.
+export type ClientePorDeporte = {
+  cliente_id: string;
+  deporte_id: string;
+  deporte: string;
+  turnos_jugados: number;
+  total_aportado: number;
+};

@@ -25,3 +25,7 @@ Entra con el usuario creado en Supabase Auth y vinculado por
 | `src/lib/semana.ts` | Fechas y horas en la zona horaria del club |
 | `src/app/(panel)/` | Todo lo que se ve con la marca del club |
 | `src/componentes/grilla-semana.tsx` | La grilla: pinta lo que la base dijo, sin reglas propias |
+| `src/componentes/panel-slot.tsx` | El panel lateral de un slot: agendar, editar, cancelar, bloquear |
+| `src/app/(panel)/turnos/acciones.ts` | Las escrituras sobre turnos, como Server Actions |
+| `src/app/(panel)/clientes/` | Tabla, detalle, lista negra y rankings; leen `vw_clientes_*` |
+| `src/lib/telefono.ts` | La unica puerta por la que entra un telefono |
