@@ -161,7 +161,7 @@ do $$
 begin
   begin
     insert into clientes (club_id, nombre, telefono, en_lista_negra)
-    values ('11111111-1111-4111-8111-111111111111', 'Sin motivo', '+543425550999', true);
+    values ('11111111-1111-4111-8111-111111111111', 'Sin motivo', '+5493425550999', true);
     raise exception 'FALLO 8: se acepto una lista negra sin justificar';
   exception
     when check_violation then

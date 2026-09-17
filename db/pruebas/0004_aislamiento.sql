@@ -50,7 +50,7 @@ begin
     raise exception 'FALLO 2: se filtraron turnos de Belgrano';
   end if;
 
-  select count(*) into n from clientes where telefono = '+543425550101';
+  select count(*) into n from clientes where telefono = '+5493425550101';
   if n <> 1 then
     raise exception 'FALLO 2: el mismo telefono existe en los dos clubes, pero solo uno deberia verse; ve %', n;
   end if;
