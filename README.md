@@ -4,7 +4,7 @@ Panel administrativo para clubes deportivos. Un club entra, configura sus
 deportes, canchas y horarios, y desde ahí gestiona turnos, clientes e ingresos.
 
 Estado: **modelo de datos en funcionamiento, sin aplicación todavía**. El
-esquema corre en PostgreSQL con dos clubes de demostración y 35 pruebas que
+esquema corre en PostgreSQL con dos clubes de demostración y 38 pruebas que
 verifican lo que el modelo promete. Lo que hay antes de eso es el
 razonamiento, y esa es la parte del trabajo que este repositorio quiere dejar
 por escrito.

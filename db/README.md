@@ -22,16 +22,16 @@ Y luego, en orden:
 
 ```bash
 pip install "psycopg[binary]"
-python db/correr.py db/migraciones/0001_esquema_inicial.sql db/migraciones/0002_disponibilidad.sql db/migraciones/0003_materializar_serie.sql
+python db/correr.py db/migraciones/0001_esquema_inicial.sql db/migraciones/0002_disponibilidad.sql db/migraciones/0003_materializar_serie.sql db/migraciones/0004_crear_serie.sql
 python db/correr.py db/semillas/0001_clubes_demo.sql
 # despues de crear tu usuario en Authentication -> Users (editar el email en el archivo):
 python db/correr.py db/semillas/0002_usuarios_club.sql
-python db/correr.py db/pruebas/0001_reglas_del_modelo.sql db/pruebas/0002_disponibilidad.sql db/pruebas/0003_materializar_serie.sql db/pruebas/0004_aislamiento.sql
+python db/correr.py db/pruebas/0001_reglas_del_modelo.sql db/pruebas/0002_disponibilidad.sql db/pruebas/0003_materializar_serie.sql db/pruebas/0004_aislamiento.sql db/pruebas/0005_crear_serie.sql
 ```
 
 Si el esquema está bien, la salida de las pruebas es una lista de `OK`. Si
 algo se rompió, corta con un `FALLO` que dice cuál.
 
 Estado al 2026-09-15: las tres migraciones y la semilla entran limpias en
-Supabase (PostgreSQL 17) y las 35 pruebas pasan, incluida la de
+Supabase (PostgreSQL 17) y las 38 pruebas pasan, incluida la de
 aislamiento entre clubes, que corre como usuario autenticado y como anonimo.
