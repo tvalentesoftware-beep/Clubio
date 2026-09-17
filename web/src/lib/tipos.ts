@@ -54,3 +54,38 @@ export type CierreResumen = {
   id: string;
   motivo: string;
 };
+
+// Lo que el panel lateral necesita de un turno.
+export type TurnoDetalle = {
+  id: string;
+  cancha_id: string;
+  tipo: TipoTurno;
+  precio: number;
+  notas: string | null;
+  inicio: string;
+  fin: string;
+  serie_id: string | null;
+  cliente: { id: string; nombre: string; telefono: string };
+};
+
+export type SerieDetalle = {
+  id: string;
+  tipo: "fijo" | "clase";
+  hora_inicio: string;
+  duracion_min: number;
+  vigente_desde: string;
+  cliente: { nombre: string; telefono: string };
+};
+
+// Una fila de fn_materializar_serie / fn_crear_serie.
+export type ResultadoMaterializacion =
+  | "creado" | "a_crear" | "ya_existia" | "conflicto" | "conflicto_serie"
+  | "cerrado" | "fuera_de_horario" | "sin_tarifa";
+
+export type FilaMaterializacion = {
+  fecha: string;
+  resultado: ResultadoMaterializacion;
+  turno_id: string | null;
+  referencia_id: string | null;
+  detalle: string | null;
+};

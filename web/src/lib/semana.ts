@@ -68,3 +68,21 @@ export function localDe(instante: string, zonaHoraria: string): { dia: string; h
   }).format(d);
   return { dia, hora };
 }
+
+// "GMT-03:00" -> "-03:00". El offset de la zona del club para un instante
+// dado; hace falta para armar un timestamptz local sin depender del server.
+function offsetDe(instante: Date, zonaHoraria: string): string {
+  const partes = new Intl.DateTimeFormat("en-US", { timeZone: zonaHoraria, timeZoneName: "longOffset" })
+    .formatToParts(instante);
+  const nombre = partes.find((p) => p.type === "timeZoneName")?.value ?? "GMT";
+  const m = nombre.match(/GMT([+-]\d{2}:\d{2})?/);
+  return m?.[1] ?? "+00:00";
+}
+
+// Fecha y hora locales del club -> instante ISO con offset ("2026-09-17T15:00:00-03:00").
+// Dos pasadas por si el offset cambia justo ese dia (horario de verano).
+export function instanteLocal(fecha: string, hora: string, zonaHoraria: string): string {
+  let offset = offsetDe(new Date(`${fecha}T${hora}:00Z`), zonaHoraria);
+  offset = offsetDe(new Date(`${fecha}T${hora}:00${offset}`), zonaHoraria);
+  return `${fecha}T${hora}:00${offset}`;
+}

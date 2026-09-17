@@ -1,7 +1,10 @@
+import Link from "next/link";
 import { etiquetaDia, localDe } from "@/lib/semana";
 import type { Cancha, CierreResumen, SerieResumen, Slot, TurnoResumen } from "@/lib/tipos";
 
 type Props = {
+  semana: string;
+  seleccion: string | null; // "canchaId|inicio" del slot abierto en el panel
   zonaHoraria: string;
   dias: string[];
   hoy: string;
@@ -14,7 +17,7 @@ type Props = {
 
 // La grilla tipo planilla que el encargado espera. No sabe ninguna regla:
 // pinta lo que fn_disponibilidad dijo de cada slot, y solo agrega nombres.
-export function GrillaSemana({ zonaHoraria, dias, hoy, canchas, slots, turnos, series, cierres }: Props) {
+export function GrillaSemana({ semana, seleccion, zonaHoraria, dias, hoy, canchas, slots, turnos, series, cierres }: Props) {
   const turnoPorId = new Map(turnos.map((t) => [t.id, t]));
   const seriePorId = new Map(series.map((s) => [s.id, s]));
   const cierrePorId = new Map(cierres.map((c) => [c.id, c]));
@@ -79,6 +82,8 @@ export function GrillaSemana({ zonaHoraria, dias, hoy, canchas, slots, turnos, s
                       <Celda
                         key={dia}
                         slot={datos.celdas.get(`${dia} ${hora}`)}
+                        semana={semana}
+                        seleccion={seleccion}
                         cancha={cancha}
                         turnoPorId={turnoPorId}
                         seriePorId={seriePorId}
@@ -99,6 +104,8 @@ export function GrillaSemana({ zonaHoraria, dias, hoy, canchas, slots, turnos, s
 
 function Celda({
   slot,
+  semana,
+  seleccion,
   cancha,
   turnoPorId,
   seriePorId,
@@ -106,57 +113,77 @@ function Celda({
   canchaPorId,
 }: {
   slot: Slot | undefined;
+  semana: string;
+  seleccion: string | null;
   cancha: Cancha;
   turnoPorId: Map<string, TurnoResumen>;
   seriePorId: Map<string, SerieResumen>;
   cierrePorId: Map<string, CierreResumen>;
   canchaPorId: Map<string, Cancha>;
 }) {
-  const base = "h-11 rounded-md px-2 py-1 align-top leading-tight";
+  const base = "h-11 rounded-md align-top leading-tight";
 
   if (!slot) return <td className={base} />;
 
+  // Cada celda es un link al panel de ese slot; la url es el estado.
+  const href = `/turnos?semana=${semana}&cancha=${cancha.id}&inicio=${encodeURIComponent(slot.inicio)}`;
+  const activa = seleccion === `${cancha.id}|${slot.inicio}`;
+  const anillo = activa ? " ring-2 ring-offset-1 ring-[var(--marca)]" : "";
+
+  let clases: string;
+  let contenido: React.ReactNode;
+
   if (slot.estado === "libre") {
-    return <td className={`${base} bg-slate-100 text-slate-400`}>libre</td>;
-  }
-
-  if (slot.estado === "ocupado") {
+    clases = "bg-slate-100 text-slate-400 hover:bg-slate-200";
+    contenido = "libre";
+  } else if (slot.estado === "ocupado") {
     const turno = slot.turno_id ? turnoPorId.get(slot.turno_id) : undefined;
-
-    // Ocupado por un turno de otra cancha que comparte el espacio.
     if (slot.turno_cancha_id && slot.turno_cancha_id !== cancha.id) {
+      // Ocupado por un turno de otra cancha que comparte el espacio.
       const otra = canchaPorId.get(slot.turno_cancha_id);
-      return (
-        <td className={`${base} border border-dashed border-slate-400 bg-slate-50 text-slate-500`}>
+      clases = "border border-dashed border-slate-400 bg-slate-50 text-slate-500";
+      contenido = (
+        <>
           no disponible
           <small className="block opacity-75">por {otra?.nombre ?? "otra cancha"}</small>
-        </td>
+        </>
+      );
+    } else {
+      clases = "text-white";
+      contenido = (
+        <>
+          <b className="block truncate">{turno?.cliente.nombre ?? "Reservado"}</b>
+          <small className="opacity-80">{turno?.tipo ?? ""}</small>
+        </>
       );
     }
-
-    return (
-      <td className={`${base} text-white`} style={{ background: "var(--marca)" }}>
-        <b className="block truncate">{turno?.cliente.nombre ?? "Reservado"}</b>
-        <small className="opacity-80">{turno?.tipo ?? ""}</small>
-      </td>
-    );
-  }
-
-  if (slot.estado === "serie") {
+  } else if (slot.estado === "serie") {
     const serie = slot.serie_id ? seriePorId.get(slot.serie_id) : undefined;
-    return (
-      <td className={`${base} border border-amber-300 bg-amber-50 text-amber-900`}>
+    clases = "border border-amber-300 bg-amber-50 text-amber-900";
+    contenido = (
+      <>
         <b className="block truncate">{serie?.cliente.nombre ?? "Fijo"}</b>
         <small className="opacity-75">{serie?.tipo ?? "fijo"} · sin generar</small>
-      </td>
+      </>
+    );
+  } else {
+    const cierre = slot.cierre_id ? cierrePorId.get(slot.cierre_id) : undefined;
+    clases = "bg-red-50 text-red-800";
+    contenido = (
+      <>
+        cerrado
+        <small className="block truncate opacity-75">{cierre?.motivo ?? ""}</small>
+      </>
     );
   }
 
-  const cierre = slot.cierre_id ? cierrePorId.get(slot.cierre_id) : undefined;
+  const propio = slot.estado === "ocupado" && !(slot.turno_cancha_id && slot.turno_cancha_id !== cancha.id);
+
   return (
-    <td className={`${base} bg-red-50 text-red-800`}>
-      cerrado
-      <small className="block truncate opacity-75">{cierre?.motivo ?? ""}</small>
+    <td className={`${base} ${clases}${anillo}`} style={propio ? { background: "var(--marca)" } : undefined}>
+      <Link href={href} className="block h-full px-2 py-1" scroll={false}>
+        {contenido}
+      </Link>
     </td>
   );
 }
