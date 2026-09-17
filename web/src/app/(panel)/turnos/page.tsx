@@ -52,6 +52,9 @@ export default async function Turnos({
     <div>
       <div className="mb-5 flex flex-wrap items-center gap-3">
         <h1 className="text-xl font-semibold">Turnos</h1>
+        <Link href="/turnos/estadisticas" className="rounded-md px-3 py-1.5 text-sm hover:bg-slate-100">
+          Ingresos
+        </Link>
         <div className="ml-auto flex items-center gap-1 text-sm">
           <Link
             href={`/turnos?semana=${sumarDias(lunes, -7)}`}

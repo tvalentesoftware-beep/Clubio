@@ -28,4 +28,5 @@ Entra con el usuario creado en Supabase Auth y vinculado por
 | `src/componentes/panel-slot.tsx` | El panel lateral de un slot: agendar, editar, cancelar, bloquear |
 | `src/app/(panel)/turnos/acciones.ts` | Las escrituras sobre turnos, como Server Actions |
 | `src/app/(panel)/clientes/` | Tabla, detalle, lista negra y rankings; leen `vw_clientes_*` |
+| `src/app/(panel)/turnos/estadisticas/` | Ingresos del mes, históricos, por deporte y tipo; leen `fn_ingresos*` |
 | `src/lib/telefono.ts` | La unica puerta por la que entra un telefono |

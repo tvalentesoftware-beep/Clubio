@@ -3,11 +3,11 @@
 Panel administrativo para clubes deportivos. Un club entra, configura sus
 deportes, canchas y horarios, y desde ahí gestiona turnos, clientes e ingresos.
 
-Estado: **modelo de datos en funcionamiento, sin aplicación todavía**. El
-esquema corre en PostgreSQL con dos clubes de demostración y 49 pruebas que
-verifican lo que el modelo promete. Lo que hay antes de eso es el
-razonamiento, y esa es la parte del trabajo que este repositorio quiere dejar
-por escrito.
+Estado: **primera maqueta funcionando**. El esquema corre en PostgreSQL con
+dos clubes de demostración y 49 pruebas que verifican lo que el modelo
+promete, y el panel web ([web/](web/)) opera la grilla, los clientes y los
+ingresos contra esa base. Lo que hay antes de eso es el razonamiento, y esa
+es la parte del trabajo que este repositorio quiere dejar por escrito.
 
 ## Por qué este repo tiene tanta documentación
 
@@ -38,6 +38,7 @@ en que se pensaron las cosas.
 | [db/migraciones/](db/migraciones/) | El esquema, como SQL ejecutable |
 | [db/semillas/](db/semillas/) | Dos clubes de demostración para levantar el sistema con datos |
 | [db/pruebas/](db/pruebas/) | Las promesas del modelo, comprobadas contra la base |
+| [web/](web/) | El panel: Next.js sobre Supabase; lee funciones y vistas, escribe por acciones de servidor |
 
 ## Stack
 
@@ -47,8 +48,11 @@ base de datos y autenticación, Vercel para el deploy. El razonamiento está en
 
 ## Alcance de esta etapa
 
-Adentro: turnos, clientes, estadísticas de ingresos y de uso, configuración
-del club, marca del club en el panel.
+Adentro y funcionando: grilla semanal con agendar, cancelar (diciendo quién),
+editar y bloquear; fijos y clases con aviso previo de conflictos; clientes con
+lista negra y rankings; ingresos del mes, históricos, por deporte y por tipo;
+marca del club en el panel. La configuración del club (canchas, horarios,
+tarifas) por ahora se carga en la base: la pantalla es la próxima etapa.
 
 Afuera por ahora: cobros y caja, torneos, bot de WhatsApp, app para el
 socio. El bot existe como producto aparte; Clubio no lo asume en el diseño,

@@ -79,6 +79,10 @@ export function FormAgendar({ ctx, precioSugerido }: { ctx: Contexto; precioSuge
         </label>
       </div>
 
+      <p className="text-xs text-slate-500">
+        Si es fijo o clase, el precio de cada turno lo pone la tarifa del club, no este campo.
+      </p>
+
       <label className={etiqueta}>
         Notas
         <input name="notas" defaultValue={v.notas} className={input} />
